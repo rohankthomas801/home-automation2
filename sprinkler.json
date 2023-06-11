@@ -1,0 +1,440 @@
+[
+    {
+        "id": "ce76c29d1ef11c86",
+        "type": "tab",
+        "label": "Plants",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "64a42b3571533c54",
+        "type": "inject",
+        "z": "ce76c29d1ef11c86",
+        "name": "Moisture sensor",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "soil",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 180,
+        "y": 160,
+        "wires": [
+            [
+                "e5dce9143564e973"
+            ]
+        ]
+    },
+    {
+        "id": "e5dce9143564e973",
+        "type": "function",
+        "z": "ce76c29d1ef11c86",
+        "name": "",
+        "func": "msg.payload = (Math.random())*100//random between 0 1and 100\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 160,
+        "wires": [
+            [
+                "1cdcc640a6ae674b"
+            ]
+        ]
+    },
+    {
+        "id": "1cdcc640a6ae674b",
+        "type": "mqtt out",
+        "z": "ce76c29d1ef11c86",
+        "name": "mqtt",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "10f6cd734708ff09",
+        "x": 590,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "6536e19451d825d1",
+        "type": "comment",
+        "z": "ce76c29d1ef11c86",
+        "name": "Triggers every 30 minutes",
+        "info": "",
+        "x": 170,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "4477d281c1a1a968",
+        "type": "comment",
+        "z": "ce76c29d1ef11c86",
+        "name": "Random value",
+        "info": "",
+        "x": 410,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "2257eea55c88764f",
+        "type": "comment",
+        "z": "ce76c29d1ef11c86",
+        "name": "Publisher",
+        "info": "",
+        "x": 600,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "042f9916d9b8390d",
+        "type": "mqtt in",
+        "z": "ce76c29d1ef11c86",
+        "name": "mqtt",
+        "topic": "soil",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "10f6cd734708ff09",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 70,
+        "y": 320,
+        "wires": [
+            [
+                "e7b58951384ef471",
+                "d17e78b6cb9d0fb0",
+                "5bad9f19be0f55d7"
+            ]
+        ]
+    },
+    {
+        "id": "e7b58951384ef471",
+        "type": "ui_gauge",
+        "z": "ce76c29d1ef11c86",
+        "name": "moisture percent display gauge",
+        "group": "e608320ca1d4fba4",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Soil Moisture Percentage",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 310,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "84560f64cea64aaa",
+        "type": "ui_switch",
+        "z": "ce76c29d1ef11c86",
+        "name": "Turn ON/OFF Sprinklers",
+        "label": "Turn ON/OFF Sprinklers",
+        "tooltip": "",
+        "group": "e608320ca1d4fba4",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "soil",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 190,
+        "y": 520,
+        "wires": [
+            [
+                "6fd5c1b716655938",
+                "7e39127b6dc3fe51"
+            ]
+        ]
+    },
+    {
+        "id": "6fd5c1b716655938",
+        "type": "debug",
+        "z": "ce76c29d1ef11c86",
+        "name": "Sprinkler Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 520,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "7e39127b6dc3fe51",
+        "type": "ui_text",
+        "z": "ce76c29d1ef11c86",
+        "group": "e608320ca1d4fba4",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "display status of sprinklers",
+        "label": "Status of Sprinklers",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 540,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "d17e78b6cb9d0fb0",
+        "type": "switch",
+        "z": "ce76c29d1ef11c86",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "20",
+                "vt": "str"
+            },
+            {
+                "t": "gte",
+                "v": "30",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 230,
+        "y": 320,
+        "wires": [
+            [
+                "8ea2ce023621d156"
+            ],
+            [
+                "ec29a4040a9201a0"
+            ]
+        ]
+    },
+    {
+        "id": "8ea2ce023621d156",
+        "type": "change",
+        "z": "ce76c29d1ef11c86",
+        "name": "Turn On",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Turn On the Sprinkler",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 400,
+        "y": 280,
+        "wires": [
+            [
+                "dfa220d42e4e231d"
+            ]
+        ]
+    },
+    {
+        "id": "5bad9f19be0f55d7",
+        "type": "debug",
+        "z": "ce76c29d1ef11c86",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 250,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "d1623cf462749cfa",
+        "type": "debug",
+        "z": "ce76c29d1ef11c86",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "ec29a4040a9201a0",
+        "type": "change",
+        "z": "ce76c29d1ef11c86",
+        "name": "Turn Off",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Turn Off the Sprinkler",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 400,
+        "y": 360,
+        "wires": [
+            [
+                "dfa220d42e4e231d"
+            ]
+        ]
+    },
+    {
+        "id": "dfa220d42e4e231d",
+        "type": "rbe",
+        "z": "ce76c29d1ef11c86",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 570,
+        "y": 320,
+        "wires": [
+            [
+                "d1623cf462749cfa",
+                "e38d67a7e4388a2c"
+            ]
+        ]
+    },
+    {
+        "id": "e38d67a7e4388a2c",
+        "type": "ui_toast",
+        "z": "ce76c29d1ef11c86",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 810,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "0ffd36dc80f2456c",
+        "type": "comment",
+        "z": "ce76c29d1ef11c86",
+        "name": "SPRINKLER SIMULATION",
+        "info": "",
+        "x": 510,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "10f6cd734708ff09",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "test-client",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "e608320ca1d4fba4",
+        "type": "ui_group",
+        "name": "Soil Moisture",
+        "tab": "dcf0ef6a958c25e8",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "dcf0ef6a958c25e8",
+        "type": "ui_tab",
+        "name": "Garden",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

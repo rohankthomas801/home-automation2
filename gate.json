@@ -1,0 +1,404 @@
+[
+    {
+        "id": "31e8be4ff2d1d8b5",
+        "type": "tab",
+        "label": "Gate",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "6dbebd8fb91505ee",
+        "type": "inject",
+        "z": "31e8be4ff2d1d8b5",
+        "name": "Front Gate sensor",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "frontgate",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 150,
+        "y": 180,
+        "wires": [
+            [
+                "3a5432ee9b64ef19"
+            ]
+        ]
+    },
+    {
+        "id": "3a5432ee9b64ef19",
+        "type": "function",
+        "z": "31e8be4ff2d1d8b5",
+        "name": "",
+        "func": "msg.payload = (Math.random())*5 //random value between 0 and 5\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 180,
+        "wires": [
+            [
+                "0b5e4c82ae9b6e1a"
+            ]
+        ]
+    },
+    {
+        "id": "0b5e4c82ae9b6e1a",
+        "type": "mqtt out",
+        "z": "31e8be4ff2d1d8b5",
+        "name": "Front gate sensor ",
+        "topic": "frontgate",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "10f6cd734708ff09",
+        "x": 570,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "581ab67ca2548ef0",
+        "type": "mqtt in",
+        "z": "31e8be4ff2d1d8b5",
+        "name": "Front gate sensor ",
+        "topic": "frontgate",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "10f6cd734708ff09",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 100,
+        "y": 360,
+        "wires": [
+            [
+                "e7ebed44deea98b8",
+                "17466a0c3eaebb43"
+            ]
+        ]
+    },
+    {
+        "id": "e7ebed44deea98b8",
+        "type": "switch",
+        "z": "31e8be4ff2d1d8b5",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "2.5",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 270,
+        "y": 360,
+        "wires": [
+            [
+                "205b98bbb037bc80"
+            ]
+        ]
+    },
+    {
+        "id": "205b98bbb037bc80",
+        "type": "change",
+        "z": "31e8be4ff2d1d8b5",
+        "name": "Open",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Open the Gate",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 360,
+        "wires": [
+            [
+                "1c5e5450bda66878",
+                "49a65fe6d945fa49"
+            ]
+        ]
+    },
+    {
+        "id": "a71d505baa514b70",
+        "type": "ui_switch",
+        "z": "31e8be4ff2d1d8b5",
+        "name": "Open/Close",
+        "label": "Switch",
+        "tooltip": "",
+        "group": "90ebd08f9b2ac723",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "frontgate",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "open",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "close",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 150,
+        "y": 540,
+        "wires": [
+            [
+                "28c9a740c05b0509"
+            ]
+        ]
+    },
+    {
+        "id": "a4758555aea6c078",
+        "type": "status",
+        "z": "31e8be4ff2d1d8b5",
+        "name": "front gate status",
+        "scope": [
+            "28c9a740c05b0509"
+        ],
+        "x": 420,
+        "y": 540,
+        "wires": [
+            [
+                "8160d11b15fbede1"
+            ]
+        ]
+    },
+    {
+        "id": "8160d11b15fbede1",
+        "type": "ui_text",
+        "z": "31e8be4ff2d1d8b5",
+        "group": "90ebd08f9b2ac723",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "name": "display front gate status",
+        "label": "Status of Front Gate",
+        "format": "{{msg.status.text}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 690,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "5890390945960a67",
+        "type": "comment",
+        "z": "31e8be4ff2d1d8b5",
+        "name": "Triggers every 10 seconds",
+        "info": "",
+        "x": 130,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "9ee77d6d3b30bc9c",
+        "type": "comment",
+        "z": "31e8be4ff2d1d8b5",
+        "name": "Random value",
+        "info": "",
+        "x": 350,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "f37ed38d22d1f4a4",
+        "type": "comment",
+        "z": "31e8be4ff2d1d8b5",
+        "name": "Publisher",
+        "info": "",
+        "x": 540,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "2825c744ea642018",
+        "type": "comment",
+        "z": "31e8be4ff2d1d8b5",
+        "name": "Subscriber",
+        "info": "",
+        "x": 80,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "d804fc6bae8857e6",
+        "type": "comment",
+        "z": "31e8be4ff2d1d8b5",
+        "name": "FRONT GATE SIMULATION",
+        "info": "",
+        "x": 380,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "50031b5081d9bffa",
+        "type": "comment",
+        "z": "31e8be4ff2d1d8b5",
+        "name": "Open Condition",
+        "info": "",
+        "x": 280,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "748a1d27f607fa79",
+        "type": "comment",
+        "z": "31e8be4ff2d1d8b5",
+        "name": "Dashboard Switch to Open or Close",
+        "info": "",
+        "x": 140,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "1c5e5450bda66878",
+        "type": "ui_toast",
+        "z": "31e8be4ff2d1d8b5",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "frontgate",
+        "name": "Open Gate Notification",
+        "x": 640,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "28c9a740c05b0509",
+        "type": "gate",
+        "z": "31e8be4ff2d1d8b5",
+        "name": "front gate",
+        "controlTopic": "frontgate",
+        "defaultState": "closed",
+        "openCmd": "open",
+        "closeCmd": "close",
+        "toggleCmd": "toggle",
+        "defaultCmd": "default",
+        "statusCmd": "status",
+        "persist": false,
+        "storeName": "memory",
+        "x": 360,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "17466a0c3eaebb43",
+        "type": "debug",
+        "z": "31e8be4ff2d1d8b5",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 290,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "49a65fe6d945fa49",
+        "type": "debug",
+        "z": "31e8be4ff2d1d8b5",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "10f6cd734708ff09",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "test-client",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "90ebd08f9b2ac723",
+        "type": "ui_group",
+        "name": "Front Gate",
+        "tab": "b63c80d77a50e58b",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "b63c80d77a50e58b",
+        "type": "ui_tab",
+        "name": "Front Gate",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

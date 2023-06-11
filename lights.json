@@ -1,0 +1,248 @@
+[
+    {
+        "id": "deb8a48c3994e11d",
+        "type": "tab",
+        "label": "Outside Lighting",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "28baecd776dd0da4",
+        "type": "light-scheduler",
+        "z": "deb8a48c3994e11d",
+        "settings": "194713f8eacf0f07",
+        "events": "[{\"start\":{\"dow\":1,\"mod\":0},\"end\":{\"dow\":2,\"mod\":0}},{\"start\":{\"dow\":2,\"mod\":0},\"end\":{\"dow\":3,\"mod\":0}},{\"start\":{\"dow\":3,\"mod\":0},\"end\":{\"dow\":4,\"mod\":0}},{\"start\":{\"dow\":4,\"mod\":0},\"end\":{\"dow\":5,\"mod\":0}},{\"start\":{\"dow\":5,\"mod\":0},\"end\":{\"dow\":6,\"mod\":0}},{\"start\":{\"dow\":6,\"mod\":0},\"end\":{\"dow\":0,\"mod\":0}},{\"start\":{\"dow\":0,\"mod\":0},\"end\":{\"dow\":1,\"mod\":1320}}]",
+        "topic": "outsidelights",
+        "name": "Outside Light Scheduler",
+        "onPayload": "ON",
+        "onPayloadType": "str",
+        "offPayload": "OFF",
+        "offPayloadType": "str",
+        "onlyWhenDark": true,
+        "scheduleRndMax": 0,
+        "sunElevationThreshold": 6,
+        "sunShowElevationInStatus": true,
+        "outputfreq": "output.statechange",
+        "x": 130,
+        "y": 240,
+        "wires": [
+            [
+                "f4adc73f779cf16c"
+            ]
+        ]
+    },
+    {
+        "id": "f4adc73f779cf16c",
+        "type": "switch",
+        "z": "deb8a48c3994e11d",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "ON",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "OFF",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 370,
+        "y": 240,
+        "wires": [
+            [
+                "c71873cd947dd70e"
+            ],
+            [
+                "3a1814d8baa29913"
+            ]
+        ]
+    },
+    {
+        "id": "e666ec60e9f1762b",
+        "type": "ui_switch",
+        "z": "deb8a48c3994e11d",
+        "name": "ON/OFF",
+        "label": "Turn ON/OFF",
+        "tooltip": "",
+        "group": "241927ed3cba1e94",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "outsidelights",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 180,
+        "y": 340,
+        "wires": [
+            [
+                "f4adc73f779cf16c"
+            ]
+        ]
+    },
+    {
+        "id": "c71873cd947dd70e",
+        "type": "change",
+        "z": "deb8a48c3994e11d",
+        "name": "ON",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "ON",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 550,
+        "y": 200,
+        "wires": [
+            [
+                "843e675ec45ac881",
+                "47a30a530f812e9e"
+            ]
+        ]
+    },
+    {
+        "id": "3a1814d8baa29913",
+        "type": "change",
+        "z": "deb8a48c3994e11d",
+        "name": "OFF",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "OFF",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 550,
+        "y": 280,
+        "wires": [
+            [
+                "843e675ec45ac881",
+                "47a30a530f812e9e"
+            ]
+        ]
+    },
+    {
+        "id": "843e675ec45ac881",
+        "type": "debug",
+        "z": "deb8a48c3994e11d",
+        "name": "Outside Lights Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "47a30a530f812e9e",
+        "type": "ui_text",
+        "z": "deb8a48c3994e11d",
+        "group": "241927ed3cba1e94",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "display outside lights status",
+        "label": "Status of Outside Lights",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 860,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "d7c57ccb7a72dda8",
+        "type": "comment",
+        "z": "deb8a48c3994e11d",
+        "name": "Triggers when sun is 6 degrees above horizon",
+        "info": "",
+        "x": 170,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "93ab91fa82245009",
+        "type": "comment",
+        "z": "deb8a48c3994e11d",
+        "name": "Dashboard Switch to turn ON/OFF",
+        "info": "",
+        "x": 180,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "aebeb65166d78317",
+        "type": "comment",
+        "z": "deb8a48c3994e11d",
+        "name": "OUTSIDE LIGHTING SIMULATION",
+        "info": "",
+        "x": 460,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "194713f8eacf0f07",
+        "type": "light-scheduler-settings",
+        "name": "my settings",
+        "latitude": "19.0760",
+        "longitude": "72.8777"
+    },
+    {
+        "id": "241927ed3cba1e94",
+        "type": "ui_group",
+        "name": "Outdoor Lighting",
+        "tab": "32e9def7307f9584",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "32e9def7307f9584",
+        "type": "ui_tab",
+        "name": "Outdoor lighting",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

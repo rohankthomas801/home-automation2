@@ -1,0 +1,431 @@
+[
+    {
+        "id": "209a326f02e21f5e",
+        "type": "tab",
+        "label": "Doors",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "ab9dba854dde6e96",
+        "type": "inject",
+        "z": "209a326f02e21f5e",
+        "name": "Door sensor",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "door",
+        "payload": "0",
+        "payloadType": "num",
+        "x": 140,
+        "y": 160,
+        "wires": [
+            [
+                "5d8a14fac7a45f05"
+            ]
+        ]
+    },
+    {
+        "id": "5d8a14fac7a45f05",
+        "type": "function",
+        "z": "209a326f02e21f5e",
+        "name": "",
+        "func": "msg.payload = (Math.random())*5//random between 0 and 5\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 160,
+        "wires": [
+            [
+                "26651ee199be4390"
+            ]
+        ]
+    },
+    {
+        "id": "26651ee199be4390",
+        "type": "mqtt out",
+        "z": "209a326f02e21f5e",
+        "name": "mqtt",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "10f6cd734708ff09",
+        "x": 530,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "2f71921bb708a792",
+        "type": "mqtt in",
+        "z": "209a326f02e21f5e",
+        "name": "mqtt",
+        "topic": "door",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "10f6cd734708ff09",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 70,
+        "y": 340,
+        "wires": [
+            [
+                "fe7e85b2e8c0984c",
+                "f03f0434bbd12f0f"
+            ]
+        ]
+    },
+    {
+        "id": "fe7e85b2e8c0984c",
+        "type": "switch",
+        "z": "209a326f02e21f5e",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "2.5",
+                "vt": "str"
+            },
+            {
+                "t": "gte",
+                "v": "2.5",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 270,
+        "y": 340,
+        "wires": [
+            [
+                "f2b76b29a5a9409e"
+            ],
+            [
+                "661151ce9791b591"
+            ]
+        ]
+    },
+    {
+        "id": "f2b76b29a5a9409e",
+        "type": "change",
+        "z": "209a326f02e21f5e",
+        "name": "Open",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "open",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 300,
+        "wires": [
+            [
+                "82cc3fa314375a93"
+            ]
+        ]
+    },
+    {
+        "id": "e57317da9a13b4aa",
+        "type": "status",
+        "z": "209a326f02e21f5e",
+        "name": "door status",
+        "scope": [
+            "a7fd0a6272de1067"
+        ],
+        "x": 400,
+        "y": 520,
+        "wires": [
+            [
+                "e3117516e3e68b25"
+            ]
+        ]
+    },
+    {
+        "id": "e3117516e3e68b25",
+        "type": "ui_text",
+        "z": "209a326f02e21f5e",
+        "group": "7dfed00c66e759f3",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "name": "display door status",
+        "label": "Status of Door",
+        "format": "{{msg.status.text}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 670,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "db00325aa5f72404",
+        "type": "comment",
+        "z": "209a326f02e21f5e",
+        "name": "Triggers every 5 seconds",
+        "info": "",
+        "x": 130,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "64cce0e628ac8970",
+        "type": "comment",
+        "z": "209a326f02e21f5e",
+        "name": "Random value",
+        "info": "",
+        "x": 350,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "2a8ff033739d3d54",
+        "type": "comment",
+        "z": "209a326f02e21f5e",
+        "name": "Publisher",
+        "info": "",
+        "x": 540,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "fb94244e3139560c",
+        "type": "comment",
+        "z": "209a326f02e21f5e",
+        "name": "Subscriber",
+        "info": "",
+        "x": 80,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "6e295d41cb07dd4c",
+        "type": "comment",
+        "z": "209a326f02e21f5e",
+        "name": "Dashboard Switch to Open or Close",
+        "info": "",
+        "x": 420,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "a7fd0a6272de1067",
+        "type": "gate",
+        "z": "209a326f02e21f5e",
+        "name": "Door",
+        "controlTopic": "door",
+        "defaultState": "closed",
+        "openCmd": "open",
+        "closeCmd": "close",
+        "toggleCmd": "toggle",
+        "defaultCmd": "default",
+        "statusCmd": "status",
+        "persist": false,
+        "storeName": "memory",
+        "x": 850,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f03f0434bbd12f0f",
+        "type": "debug",
+        "z": "209a326f02e21f5e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 290,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "d857f50f6b0b3046",
+        "type": "debug",
+        "z": "209a326f02e21f5e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "793aa94ffb3e007d",
+        "type": "ui_switch",
+        "z": "209a326f02e21f5e",
+        "name": "Open/Close",
+        "label": "Open/Close the Door",
+        "tooltip": "",
+        "group": "7dfed00c66e759f3",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "door",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "open",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "close",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 430,
+        "y": 440,
+        "wires": [
+            [
+                "a7fd0a6272de1067"
+            ]
+        ]
+    },
+    {
+        "id": "661151ce9791b591",
+        "type": "change",
+        "z": "209a326f02e21f5e",
+        "name": "Close",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "close",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 380,
+        "wires": [
+            [
+                "82cc3fa314375a93"
+            ]
+        ]
+    },
+    {
+        "id": "82cc3fa314375a93",
+        "type": "rbe",
+        "z": "209a326f02e21f5e",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 610,
+        "y": 340,
+        "wires": [
+            [
+                "d857f50f6b0b3046",
+                "a7fd0a6272de1067"
+            ]
+        ]
+    },
+    {
+        "id": "fb1cab04420b7b72",
+        "type": "comment",
+        "z": "209a326f02e21f5e",
+        "name": "DOOR SIMULATION",
+        "info": "",
+        "x": 450,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "10f6cd734708ff09",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "test-client",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "7dfed00c66e759f3",
+        "type": "ui_group",
+        "name": "Door",
+        "tab": "ac1ec207bf1e5d27",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ac1ec207bf1e5d27",
+        "type": "ui_tab",
+        "name": "Door",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
